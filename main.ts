@@ -102,5 +102,8 @@ app.addEventListener("listen", (e) => {
 
 app.addEventListener("error", (e) => {
   console.error(`Could not start server: ${e.error}`);
-  dbPool.end();
+  // https://oakserver.github.io/oak/FAQ.html
+  if (!e.message.includes("connection closed before message completed")) {
+    dbPool.end();
+  }
 });
