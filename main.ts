@@ -48,6 +48,8 @@ userRouter.get("/profile/:id", async (ctx) => {
     [id]
   );
 
+  client.release();
+
   if (!res.rowCount || res.rowCount === 0) {
     ctx.response.status = 404;
     ctx.response.body = { code: 404, message: "User not found" };
@@ -69,6 +71,8 @@ userRouter.get("/users/:page", async (ctx) => {
     [start]
   );
 
+  client.release();
+
   ctx.response.body = { ...res.rows };
 });
 
@@ -87,6 +91,9 @@ userRouter.post("/users", async (ctx) => {
   `,
     body
   );
+
+  client.release();
+
   ctx.response.body = { ...res.rows[0] };
 });
 
